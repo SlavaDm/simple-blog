@@ -1,11 +1,10 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { V1Module } from './v1/v1.module';
 
+/**
+ * The module for binding all app modules in 1 place.
+ */
 @Module({
   imports: [V1Module],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}

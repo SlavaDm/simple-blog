@@ -9,7 +9,11 @@ export class V1Controller {
   constructor(private readonly v1Service: V1Service) {}
 
   @Get()
-  getInfo() {
+  /**
+   * The method gets info about the version api.
+   * @returns the description about the version api.
+   */
+  private getInfo() {
     return this.v1Service.getInfo();
   }
 }

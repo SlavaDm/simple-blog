@@ -10,25 +10,34 @@ import { PostsService } from './posts.service';
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
-  // @Get()
-  // getPosts(@Query('from') from: string, @Query('to') to: string): any {
-  //   return this.postsService.getPosts(from, to);
-  // }
   @Get()
-  getPosts(
+  /**
+   * The method gets posts by query params. If "from", "to" don't exist - use default params.
+   * @returns the array with posts.
+   */
+  private getPosts(
     @Query('from') from: string,
     @Query('to') to: string,
   ): Observable<PostDTO[]> {
     return this.postsService.getPosts(from, to);
   }
 
+  /**
+   * The method gets count of the posts.
+   * @returns the count of the posts.
+   */
   @Get('count')
-  getCountOfThePosts(): Observable<number> {
+  private getCountOfThePosts(): Observable<number> {
     return this.postsService.getCountOfThePosts();
   }
 
+  /**
+   * The method for getting post by id.
+   * @param id - The param for getting post by id.
+   * @returns the post by id.
+   */
   @Get(':id')
-  getPost(@Param('id') id: string): Observable<PostDTO> {
+  private getPost(@Param('id') id: string): Observable<PostDTO> {
     return this.postsService.getPost(id);
   }
 }

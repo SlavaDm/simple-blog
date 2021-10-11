@@ -9,33 +9,17 @@ import { BoundaryCondition } from 'src/enum/boundary-condition';
  */
 @Injectable()
 export class PostsService {
+  /**
+   * init HttpService for sending requests.
+   */
   constructor(private readonly httpService: HttpService) {}
 
-  getCountOfThePosts(): Observable<number> {
-    return this.httpService
-      .get('https://jsonplaceholder.typicode.com/posts')
-      .pipe(map((response) => Number(response.data.length)));
-  }
-
   /**
-   *
-   * @returns
+   * The method gets posts by query params. If "from", "to" don't exist - use default params.
+   * @returns the array with posts.
    */
-  getPosts(from: string, to: string): Observable<PostDTO[]> {
-    if (Number.isInteger(Number(from) && Number.isInteger(Number(to)))) {
-      // const a = await lastValueFrom(
-      //   this.httpService.get('https://jsonplaceholder.typicode.com/posts').pipe(
-      //     catchError((error) => {
-      //       throw new BadRequestException(error);
-      //     }),
-      //     map((el) => {
-      //       return el.data
-      //         .map((el) => (el.id >= 2 && el.id <= 5 ? el : null))
-      //         .filter((el) => el !== null);
-      //     }),
-      //   ),
-      // );
-      // return a;
+  public getPosts(from: string, to: string): Observable<PostDTO[]> {
+    if (Number.isInteger(Number(from)) && Number.isInteger(Number(to))) {
       return this.httpService
         .get('https://jsonplaceholder.typicode.com/posts')
         .pipe(
@@ -43,11 +27,10 @@ export class PostsService {
             throw new BadRequestException(error);
           }),
           map((response) => {
-            return response.data
-              .map((post: PostDTO) =>
-                post.id >= Number(from) && post.id <= Number(to) ? post : null,
-              )
-              .filter((post: PostDTO) => post !== null);
+            return response.data.filter(
+              (post: PostDTO) =>
+                post.id >= Number(from) && post.id <= Number(to),
+            );
           }),
         );
     }
@@ -59,24 +42,36 @@ export class PostsService {
           throw new BadRequestException(error);
         }),
         map((response) => {
-          return response.data
-            .map((post: PostDTO) =>
+          return response.data.filter(
+            (post: PostDTO) =>
               post.id >= BoundaryCondition.FROM &&
-              post.id <= BoundaryCondition.TO
-                ? post
-                : null,
-            )
-            .filter((post: PostDTO) => post !== null);
+              post.id <= BoundaryCondition.TO,
+          );
         }),
       );
   }
 
   /**
-   * The function for getting post by id.
+   * The method gets count of the posts.
+   * @returns the count of the posts.
+   */
+  public getCountOfThePosts(): Observable<number> {
+    return this.httpService
+      .get('https://jsonplaceholder.typicode.com/posts')
+      .pipe(
+        catchError((error) => {
+          throw new BadRequestException(error);
+        }),
+        map((response) => Number(response.data.length)),
+      );
+  }
+
+  /**
+   * The method for getting post by id.
    * @param id - The param for getting post by id.
    * @returns the post by id.
    */
-  getPost(id: string): Observable<PostDTO> {
+  public getPost(id: string): Observable<PostDTO> {
     if (Number.isInteger(Number(id))) {
       return this.httpService
         .get(`https://jsonplaceholder.typicode.com/posts/${id}`)

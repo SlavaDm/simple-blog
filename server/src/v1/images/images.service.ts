@@ -9,16 +9,17 @@ import { BoundaryCondition } from 'src/enum/boundary-condition';
  */
 @Injectable()
 export class ImagesService {
+  /**
+   * init HttpService for sending requests.
+   */
   constructor(private readonly httpService: HttpService) {}
 
-  getCountOfTheImages(): Observable<number> {
-    return this.httpService
-      .get('https://jsonplaceholder.typicode.com/photos')
-      .pipe(map((response) => Number(response.data.length)));
-  }
-
-  getImages(from: string, to: string): Observable<ImageDTO[]> {
-    if (Number.isInteger(Number(from) && Number.isInteger(Number(to)))) {
+  /**
+   * The method gets images by query params. If "from", "to" don't exist - use default params.
+   * @returns the array with images.
+   */
+  public getImages(from: string, to: string): Observable<ImageDTO[]> {
+    if (Number.isInteger(Number(from)) && Number.isInteger(Number(to))) {
       return this.httpService
         .get('https://jsonplaceholder.typicode.com/photos')
         .pipe(
@@ -26,42 +27,51 @@ export class ImagesService {
             throw new BadRequestException(error);
           }),
           map((response) => {
-            return response.data
-              .map((image: ImageDTO) =>
-                image.id >= Number(from) && image.id <= Number(to)
-                  ? image
-                  : null,
-              )
-              .filter((image: ImageDTO) => image !== null);
+            return response.data.filter(
+              (image: ImageDTO) =>
+                image.id >= Number(from) && image.id <= Number(to),
+            );
           }),
         );
     }
 
     return this.httpService
-      .get('https://jsonplaceholder.typicode.com/posts')
+      .get('https://jsonplaceholder.typicode.com/photos')
       .pipe(
         catchError((error) => {
           throw new BadRequestException(error);
         }),
         map((response) => {
-          return response.data
-            .map((image: ImageDTO) =>
+          return response.data.filter(
+            (image: ImageDTO) =>
               image.id >= BoundaryCondition.FROM &&
-              image.id <= BoundaryCondition.TO
-                ? image
-                : null,
-            )
-            .filter((image: ImageDTO) => image !== null);
+              image.id <= BoundaryCondition.TO,
+          );
         }),
       );
   }
 
   /**
-   *
-   * @param id - The param for getting image by id.
-   * @returns
+   * The method gets count of the images.
+   * @returns the count of the images.
    */
-  getImage(id: string): Observable<ImageDTO> {
+  public getCountOfTheImages(): Observable<number> {
+    return this.httpService
+      .get('https://jsonplaceholder.typicode.com/photos')
+      .pipe(
+        catchError((error) => {
+          throw new BadRequestException(error);
+        }),
+        map((response) => Number(response.data.length)),
+      );
+  }
+
+  /**
+   * The method for getting image by id.
+   * @param id - The param for getting image by id.
+   * @returns the image by id.
+   */
+  public getImage(id: string): Observable<ImageDTO> {
     if (Number.isInteger(Number(id))) {
       return this.httpService
         .get(`https://jsonplaceholder.typicode.com/photos/${id}`)

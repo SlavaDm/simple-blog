@@ -5,7 +5,11 @@ import { Injectable } from '@nestjs/common';
  */
 @Injectable()
 export class V1Service {
-  getInfo(): string {
+  /**
+   * The method gets info about the version api.
+   * @returns the description about the version api.
+   */
+  public getInfo(): string {
     return 'the first version of the rest api';
   }
 }
