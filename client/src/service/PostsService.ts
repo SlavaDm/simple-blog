@@ -3,7 +3,7 @@ import { PostDTO } from '../dto/post.dto';
 import { ServerVariables } from '../enum/ServerVariables';
 
 export class PostsService {
-  static async getPosts(from: number, to: number): Promise<PostDTO[] | null> {
+  static async getPosts(from: number, to: number): Promise<PostDTO[]> {
     try {
       const posts = await axios.get<PostDTO[]>(
         `${ServerVariables.HOST}/v1/posts?from=${from}&to=${to}`
@@ -11,7 +11,7 @@ export class PostsService {
 
       return posts.data;
     } catch (e) {
-      return null;
+      return [];
     }
   }
 
@@ -31,7 +31,7 @@ export class PostsService {
     }
   }
 
-  static async getPost(id: number): Promise<PostDTO | null> {
+  static async getPost(id: number): Promise<PostDTO> {
     try {
       const posts = await axios.get<PostDTO>(
         `${ServerVariables.HOST}/v1/posts/${id}`
@@ -39,7 +39,7 @@ export class PostsService {
 
       return posts.data;
     } catch (e) {
-      return null;
+      return { userId: 0, id: 0, title: '', body: '' };
     }
   }
 }

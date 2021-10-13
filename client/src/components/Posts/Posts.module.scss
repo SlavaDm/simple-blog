@@ -1,3 +1,84 @@
+$font-family: 'Open Sans', sans-serif;
+
 .posts-area {
   padding: 60px 0 0 0;
+}
+
+.post-search-area {
+  display: flex;
+  width: 80%;
+  margin: 0 auto;
+  height: 50px;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.post-search-input {
+  font-size: 20px;
+  font-family: $font-family;
+  background-color: rgb(207, 207, 207);
+  line-height: 30px;
+  padding: 0 10px;
+  border-radius: 5px;
+}
+
+.post-search-input:focus {
+  border: 1px solid rgb(99, 97, 97);
+}
+
+.post-search-input::placeholder {
+  font-size: 20px;
+  font-family: $font-family;
+}
+
+.posts-list {
+  width: 80%;
+  margin: 10px auto;
+}
+
+.post {
+  margin: 10px 0;
+  border: 2px solid rgba(0, 0, 0, 0.8);
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.post > ul > li {
+  font-family: $font-family;
+  margin: 3px 0;
+}
+
+.posts-navigation-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+}
+
+.posts-navigation-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 19px;
+  color: black;
+  font-size: 15px;
+  font-family: $font-family;
+  line-height: 38px;
+  min-width: 38px;
+}
+
+.posts-navigation-button:hover {
+  color: white;
+  background-color: rgb(103, 103, 230);
+}
+
+.posts-navigation-button-disabled {
+  background-color: rgb(131, 131, 131);
+  cursor: default;
+}
+
+.posts-navigation-button-current {
+  color: white;
+  background-color: rgb(103, 103, 230);
 }

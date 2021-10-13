@@ -27,10 +27,9 @@ export class PostsService {
             throw new BadRequestException(error);
           }),
           map((response) => {
-            return response.data.filter(
-              (post: PostDTO) =>
-                post.id >= Number(from) && post.id <= Number(to),
-            );
+            return response.data
+              .sort((a, b) => (a.id > b.id ? 1 : -1))
+              .slice(Number(from) - 1, Number(to));
           }),
         );
     }

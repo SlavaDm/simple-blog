@@ -12,20 +12,37 @@ export const fetchCountOfAllPages = createAsyncThunk(
   }
 );
 
+export const fetchGetPosts = createAsyncThunk(
+  'post/fetchGetPosts',
+  async (page: number) => {
+    const posts = await PostsService.getPosts((page - 1) * 5 + 1, page * 5);
+    return posts;
+  }
+);
+
+export const fetchGetPostByID = createAsyncThunk(
+  'post/fetchGetPostByID',
+  async (id: number) => {
+    const post = await PostsService.getPost(id);
+    return post;
+  }
+);
+
 const postSlice = createSlice({
   name: 'post',
   initialState: {
-    posts: [],
-    error: null,
-    status: null,
+    posts: [] as PostDTO[],
     currentPage: 1,
     allPages: 0,
+    postById: {
+      userId: 0,
+      id: 0,
+      title: '',
+      body: '',
+    } as PostDTO,
   },
   reducers: {
-    setPosts(
-      state: IPostSlice,
-      action: { payload: { posts: PostDTO[] | null } }
-    ) {
+    setPosts(state: IPostSlice, action: { payload: { posts: PostDTO[] } }) {
       state.posts = action.payload.posts;
     },
     setPostsCurrentPage(
@@ -45,13 +62,13 @@ const postSlice = createSlice({
     builder.addCase(fetchCountOfAllPages.fulfilled, (state, action) => {
       state.allPages = action.payload;
     });
+    builder.addCase(fetchGetPosts.fulfilled, (state, action) => {
+      state.posts = action.payload;
+    });
+    builder.addCase(fetchGetPostByID.fulfilled, (state, action) => {
+      state.postById = action.payload;
+    });
   },
-  // extraReducers: {
-  //   [fetchCountOfAllPages.pending]: (state: IPostSlice) => {
-  //     state.status = 'loading';
-  //     state.error = null;
-  //   },
-  // },
 });
 
 export default postSlice.reducer;
