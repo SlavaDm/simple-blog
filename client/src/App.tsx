@@ -1,15 +1,12 @@
 import React from 'react';
-import { Route, Switch } from 'react-router';
+import AppRouter from './components/AppRouter/AppRouter';
+import Header from './components/Header/Header';
 
-const App = () => {
+const App: React.FC = () => {
   return (
     <>
-      <div>Header</div>
-      <Switch>
-        <Route>
-          
-        </Route>
-      </Switch>
+      <Header />
+      <AppRouter />
     </>
   );
 };

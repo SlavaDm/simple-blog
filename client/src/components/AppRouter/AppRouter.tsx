@@ -1,19 +1,26 @@
 import React from 'react';
-import { Route } from 'react-router';
+import { Redirect, Route, Switch } from 'react-router';
 import { IRoute } from '../../interface/IRoute';
 import { publicRoutes } from './Routes';
 
-const AppRouter = () => {
-  return publicRoutes.map((route: IRoute) => {
-    return (
-      <Route
-        key={route.path}
-        path={route.path}
-        render={() => route.component}
-        exact={route.exact}
-      />
-    );
-  });
+const AppRouter: React.FC = () => {
+  return (
+    <div className="wrapper">
+      <Switch>
+        {publicRoutes.map((route: IRoute) => {
+          return (
+            <Route
+              key={route.path}
+              path={route.path}
+              render={() => route.component}
+              exact={route.exact}
+            />
+          );
+        })}
+        <Redirect to="/posts" />)
+      </Switch>
+    </div>
+  );
 };
 
 export default AppRouter;

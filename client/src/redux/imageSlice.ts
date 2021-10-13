@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { IImageSlice } from '../interface/IImageSlice';
 
 const imageSlice = createSlice({
-  name: 'page',
+  name: 'image',
   initialState: {
     images: [],
     currentPage: 1,
@@ -12,14 +12,15 @@ const imageSlice = createSlice({
     setImages(state: IImageSlice, action: { payload: IImageSlice }) {
       state.images = action.payload.images;
     },
-    setCurrentPage(state: IImageSlice, action: { payload: IImageSlice }) {
+    setImagesCurrentPage(state: IImageSlice, action: { payload: IImageSlice }) {
       state.currentPage = action.payload.currentPage;
     },
-    setAllPages(state: IImageSlice, action: { payload: IImageSlice }) {
+    setImagesAllPages(state: IImageSlice, action: { payload: IImageSlice }) {
       state.allPages = action.payload.allPages;
     },
   },
 });
 
 export default imageSlice.reducer;
-export const { setImages, setCurrentPage, setAllPages } = imageSlice.actions;
+export const { setImages, setImagesCurrentPage, setImagesAllPages } =
+  imageSlice.actions;
