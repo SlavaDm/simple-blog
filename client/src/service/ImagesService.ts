@@ -3,7 +3,10 @@ import { ImageDTO } from '../dto/image.dto';
 import { ServerVariables } from '../enum/ServerVariables';
 
 export class ImagesService {
-  static async getImages(from: number, to: number): Promise<ImageDTO[]> {
+  public static async getImages(
+    from: number,
+    to: number
+  ): Promise<ImageDTO[]> {
     try {
       const images = await axios.get<ImageDTO[]>(
         `${ServerVariables.HOST}/v1/images?from=${from}&to=${to}`
@@ -15,7 +18,7 @@ export class ImagesService {
     }
   }
 
-  static async getCountOfTheImages(): Promise<number> {
+  public static async getCountOfTheImages(): Promise<number> {
     try {
       const count = await axios.get<number>(
         `${ServerVariables.HOST}/v1/images/count`
@@ -31,7 +34,7 @@ export class ImagesService {
     }
   }
 
-  static async getImage(id: number): Promise<ImageDTO> {
+  public static async getImage(id: number): Promise<ImageDTO> {
     try {
       const image = await axios.get<ImageDTO>(
         `${ServerVariables.HOST}/v1/images/${id}`

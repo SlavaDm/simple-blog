@@ -2,6 +2,7 @@ $font-family: 'Open Sans', sans-serif;
 
 .images-area {
   padding: 60px 0 0 0;
+  margin: 0 0 30px 0;
 }
 
 .image-search-area {
@@ -32,6 +33,9 @@ $font-family: 'Open Sans', sans-serif;
 }
 
 .images-list {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(3, minmax(170px, 1fr));
   width: 80%;
   margin: 10px auto;
 }
@@ -43,9 +47,39 @@ $font-family: 'Open Sans', sans-serif;
   border-radius: 10px;
 }
 
+.image-big {
+  width: 700px;
+  margin: 10px auto;
+  border: 2px solid rgba(0, 0, 0, 0.8);
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.image-big-image-area {
+  width: 600px;
+  margin: 10px auto;
+}
+
+.image-big img {
+  height: 600px;
+  width: 600px;
+}
+
 .image > ul > li {
   font-family: $font-family;
-  margin: 3px 0;
+  font-size: 14px;
+  margin: 3px 5px;
+}
+
+.images-list-image {
+  margin: 10px 0 !important;
+  display: flex;
+  justify-content: center;
+}
+
+.images-list-image img {
+  width: 150px;
+  height: 150px;
 }
 
 .images-navigation-buttons {
@@ -76,4 +110,10 @@ $font-family: 'Open Sans', sans-serif;
 .images-navigation-button-current {
   color: white;
   background-color: rgb(103, 103, 230);
+}
+
+@media screen and (max-width: 1200px) {
+  .images-list {
+    grid-template-columns: minmax(170px, 1fr);
+  }
 }

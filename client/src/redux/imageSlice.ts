@@ -9,7 +9,7 @@ export const fetchCountOfAllPages = createAsyncThunk(
   'image/fetchCountOfAllPages',
   async () => {
     const countOfTheImages = await ImagesService.getCountOfTheImages();
-    const countOfThePages = Math.ceil(countOfTheImages / 5);
+    const countOfThePages = Math.ceil(countOfTheImages / 9);
     return countOfThePages;
   }
 );
@@ -17,7 +17,7 @@ export const fetchCountOfAllPages = createAsyncThunk(
 export const fetchGetImages = createAsyncThunk(
   'image/fetchGetImages',
   async (page: number) => {
-    const images = await ImagesService.getImages((page - 1) * 5 + 1, page * 5);
+    const images = await ImagesService.getImages((page - 1) * 9 + 1, page * 9);
     return images;
   }
 );

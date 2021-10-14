@@ -80,15 +80,13 @@ const Images: React.FC = () => {
 
           {searchImageInput.length > 0 ? (
             imageById.id !== -1 ? (
-              <div className={s.image}>
-                <ul>
-                  <li>id: {imageById.id}</li>
-                  <li>albumId: {imageById.albumId}</li>
-                  <li>title: {imageById.title}</li>
-                  <li>url: {imageById.url}</li>
-                  <li>thumbnailUrl: {imageById.thumbnailUrl}</li>
-                </ul>
-              </div>
+              <ul className={s['image-big']}>
+                <li>id: {imageById.id}</li>
+                <li>title: {imageById.title}</li>
+                <li className={s['image-big-image-area']}>
+                  <img src={imageById.url} alt={imageById.title} />
+                </li>
+              </ul>
             ) : (
               <div>Incorrect ID</div>
             )
@@ -100,10 +98,10 @@ const Images: React.FC = () => {
                     <li className={s.image} key={image.id}>
                       <ul>
                         <li>id: {image.id}</li>
-                        <li>albumId: {image.albumId}</li>
                         <li>title: {image.title}</li>
-                        <li>url: {image.url}</li>
-                        <li>thumbnailUrl: {image.thumbnailUrl}</li>
+                        <li className={s['images-list-image']}>
+                          <img src={image.thumbnailUrl} alt={image.title} />
+                        </li>
                       </ul>
                     </li>
                   );

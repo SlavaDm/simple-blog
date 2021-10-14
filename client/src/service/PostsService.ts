@@ -3,7 +3,7 @@ import { PostDTO } from '../dto/post.dto';
 import { ServerVariables } from '../enum/ServerVariables';
 
 export class PostsService {
-  static async getPosts(from: number, to: number): Promise<PostDTO[]> {
+  public static async getPosts(from: number, to: number): Promise<PostDTO[]> {
     try {
       const posts = await axios.get<PostDTO[]>(
         `${ServerVariables.HOST}/v1/posts?from=${from}&to=${to}`
@@ -15,7 +15,7 @@ export class PostsService {
     }
   }
 
-  static async getCountOfThePosts(): Promise<number> {
+  public static async getCountOfThePosts(): Promise<number> {
     try {
       const count = await axios.get<number>(
         `${ServerVariables.HOST}/v1/posts/count`
@@ -31,7 +31,7 @@ export class PostsService {
     }
   }
 
-  static async getPost(id: number): Promise<PostDTO> {
+  public static async getPost(id: number): Promise<PostDTO> {
     try {
       const posts = await axios.get<PostDTO>(
         `${ServerVariables.HOST}/v1/posts/${id}`
