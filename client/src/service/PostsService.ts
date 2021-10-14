@@ -39,7 +39,7 @@ export class PostsService {
 
       return posts.data;
     } catch (e) {
-      return { userId: 0, id: 0, title: '', body: '' };
+      return { userId: -1, id: -1, title: '', body: '' };
     }
   }
 }

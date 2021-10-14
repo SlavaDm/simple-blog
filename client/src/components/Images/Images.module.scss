@@ -1,3 +1,79 @@
+$font-family: 'Open Sans', sans-serif;
+
 .images-area {
   padding: 60px 0 0 0;
+}
+
+.image-search-area {
+  display: flex;
+  width: 80%;
+  margin: 0 auto;
+  height: 50px;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.image-search-input {
+  font-size: 20px;
+  font-family: $font-family;
+  background-color: rgb(207, 207, 207);
+  line-height: 30px;
+  padding: 0 10px;
+  border-radius: 5px;
+}
+
+.image-search-input:focus {
+  border: 1px solid rgb(99, 97, 97);
+}
+
+.image-search-input::placeholder {
+  font-size: 20px;
+  font-family: $font-family;
+}
+
+.images-list {
+  width: 80%;
+  margin: 10px auto;
+}
+
+.image {
+  margin: 10px 0;
+  border: 2px solid rgba(0, 0, 0, 0.8);
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.image > ul > li {
+  font-family: $font-family;
+  margin: 3px 0;
+}
+
+.images-navigation-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+}
+
+.images-navigation-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 19px;
+  color: black;
+  font-size: 15px;
+  font-family: $font-family;
+  line-height: 38px;
+  min-width: 38px;
+}
+
+.images-navigation-button:hover {
+  color: white;
+  background-color: rgb(103, 103, 230);
+}
+
+.images-navigation-button-current {
+  color: white;
+  background-color: rgb(103, 103, 230);
 }

@@ -35,8 +35,8 @@ const postSlice = createSlice({
     currentPage: 1,
     allPages: 0,
     postById: {
-      userId: 0,
-      id: 0,
+      userId: -1,
+      id: -1,
       title: '',
       body: '',
     } as PostDTO,
@@ -45,17 +45,11 @@ const postSlice = createSlice({
     setPosts(state: IPostSlice, action: { payload: { posts: PostDTO[] } }) {
       state.posts = action.payload.posts;
     },
-    setPostsCurrentPage(
+    setCurrentPage(
       state: IPostSlice,
       action: { payload: { currentPage: number } }
     ) {
       state.currentPage = action.payload.currentPage;
-    },
-    setPostsAllPages(
-      state: IPostSlice,
-      action: { payload: { allPages: number | null } }
-    ) {
-      state.allPages = action.payload.allPages;
     },
   },
   extraReducers: (builder) => {
@@ -72,5 +66,4 @@ const postSlice = createSlice({
 });
 
 export default postSlice.reducer;
-export const { setPosts, setPostsCurrentPage, setPostsAllPages } =
-  postSlice.actions;
+export const { setPosts, setCurrentPage } = postSlice.actions;

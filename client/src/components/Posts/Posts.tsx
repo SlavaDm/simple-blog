@@ -1,14 +1,19 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { PostDTO } from '../../dto/post.dto';
+
 import { RootState } from '../../redux';
+
 import {
   fetchCountOfAllPages,
   fetchGetPostByID,
   fetchGetPosts,
-  setPostsCurrentPage,
+  setCurrentPage,
 } from '../../redux/postSlice';
+
 import { debounce } from '../../utils/debounce';
+
 import s from './Posts.module.scss';
 
 const Posts: React.FC = () => {
@@ -18,13 +23,17 @@ const Posts: React.FC = () => {
   const posts = useSelector((state: RootState) => state.post.posts);
   const allPages = useSelector((state: RootState) => state.post.allPages);
   const currentPage = useSelector((state: RootState) => state.post.currentPage);
-  const [searchPostInput, setSearchPostInput] = React.useState<string>('');
 
+  const [searchPostInput, setSearchPostInput] = React.useState<string>('');
   const [buttonsArray, setButtonsArray] = React.useState<number[]>([]);
 
   React.useEffect(() => {
     dispatch(fetchGetPosts(currentPage));
   }, [currentPage, dispatch]);
+
+  React.useEffect(() => {
+    dispatch(fetchCountOfAllPages());
+  }, [dispatch]);
 
   React.useEffect(() => {
     if (allPages > 0) {
@@ -46,10 +55,6 @@ const Posts: React.FC = () => {
     }
   }, [currentPage, allPages]);
 
-  React.useEffect(() => {
-    dispatch(fetchCountOfAllPages());
-  }, [dispatch]);
-
   const handleSearchPostInput = (event: any) => {
     if (Number.isInteger(Number(event.target.value))) {
       dispatch(fetchGetPostByID(Number(event.target.value)));
@@ -58,7 +63,7 @@ const Posts: React.FC = () => {
   };
 
   const handleChangeCurrentPage = (page: number) => {
-    dispatch(setPostsCurrentPage({ currentPage: page }));
+    dispatch(setCurrentPage({ currentPage: page }));
   };
 
   return (
@@ -74,7 +79,7 @@ const Posts: React.FC = () => {
           </div>
 
           {searchPostInput.length > 0 ? (
-            postById.id !== 0 ? (
+            postById.id !== -1 ? (
               <div className={s.post}>
                 <ul>
                   <li>id: {postById.id}</li>
@@ -117,6 +122,7 @@ const Posts: React.FC = () => {
                         </button>
                       );
                     }
+
                     return (
                       <button
                         key={num}

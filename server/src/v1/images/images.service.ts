@@ -27,10 +27,9 @@ export class ImagesService {
             throw new BadRequestException(error);
           }),
           map((response) => {
-            return response.data.filter(
-              (image: ImageDTO) =>
-                image.id >= Number(from) && image.id <= Number(to),
-            );
+            return response.data
+              .sort((a, b) => (a.id > b.id ? 1 : -1))
+              .slice(Number(from) - 1, Number(to));
           }),
         );
     }
