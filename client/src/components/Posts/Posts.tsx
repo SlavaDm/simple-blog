@@ -13,9 +13,14 @@ import {
 } from '../../redux/postSlice';
 
 import { debounce } from '../../utils/debounce';
+import { setPagination } from '../../utils/set-pagination';
 
 import s from './Posts.module.scss';
 
+/**
+ * The component with posts.
+ * @returns component with posts.
+ */
 const Posts: React.FC = () => {
   const dispatch = useDispatch();
 
@@ -27,41 +32,47 @@ const Posts: React.FC = () => {
   const [searchPostInput, setSearchPostInput] = React.useState<string>('');
   const [buttonsArray, setButtonsArray] = React.useState<number[]>([]);
 
+  /**
+   * React Hook for printing posts on page.
+   */
   React.useEffect(() => {
     dispatch(fetchGetPosts(currentPage));
   }, [currentPage, dispatch]);
 
+  /**
+   * React Hook for setting count of all pages for pagination in the Redux.
+   */
   React.useEffect(() => {
     dispatch(fetchCountOfAllPages());
   }, [dispatch]);
 
+  /**
+   * React Hook for setting pagination of the posts.
+   */
   React.useEffect(() => {
-    if (allPages > 0) {
-      if (allPages < 3) {
-        setButtonsArray(
-          [1, 2, 3].slice(0, allPages - 1).map((num) => {
-            return num;
-          })
-        );
-      } else {
-        if (currentPage === allPages) {
-          setButtonsArray([currentPage - 2, currentPage - 1, currentPage]);
-        } else if (currentPage === 1) {
-          setButtonsArray([currentPage, currentPage + 1, currentPage + 2]);
-        } else {
-          setButtonsArray([currentPage - 1, currentPage, currentPage + 1]);
-        }
-      }
-    }
+    setPagination(setButtonsArray, currentPage, allPages);
   }, [currentPage, allPages]);
 
-  const handleSearchPostInput = (event: any) => {
-    if (Number.isInteger(Number(event.target.value))) {
+  /**
+   * The handle of input value for search post by id.
+   * @param event data from the input.
+   */
+  const handleSearchPostInput = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setSearchPostInput(event.target.value);
+    if (
+      Number.isInteger(Number(event.target.value)) &&
+      Number(event.target.value) > 0
+    ) {
       dispatch(fetchGetPostByID(Number(event.target.value)));
-      setSearchPostInput(event.target.value);
     }
   };
 
+  /**
+   * The handle of change current page, change state in the redux.
+   * @param page number for switching to need page.
+   */
   const handleChangeCurrentPage = (page: number) => {
     dispatch(setCurrentPage({ currentPage: page }));
   };
@@ -144,4 +155,4 @@ const Posts: React.FC = () => {
   );
 };
 
-export default Posts;
+export default React.memo(Posts);

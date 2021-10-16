@@ -2,7 +2,16 @@ import axios from 'axios';
 import { PostDTO } from '../dto/post.dto';
 import { ServerVariables } from '../enum/ServerVariables';
 
+/**
+ * Service for working with posts by server api.
+ */
 export class PostsService {
+  /**
+   * The function for getting posts.
+   * @param from left boundary condition for pagination.
+   * @param to right boundary condition for pagination.
+   * @returns array with posts.
+   */
   public static async getPosts(from: number, to: number): Promise<PostDTO[]> {
     try {
       const posts = await axios.get<PostDTO[]>(
@@ -15,6 +24,10 @@ export class PostsService {
     }
   }
 
+  /**
+   * Function is getting count of the posts.
+   * @returns the count of the all posts.
+   */
   public static async getCountOfThePosts(): Promise<number> {
     try {
       const count = await axios.get<number>(
@@ -31,6 +44,11 @@ export class PostsService {
     }
   }
 
+  /**
+   * The function for getting post by id.
+   * @param id search param for find the post.
+   * @returns object with post info.
+   */
   public static async getPost(id: number): Promise<PostDTO> {
     try {
       const posts = await axios.get<PostDTO>(

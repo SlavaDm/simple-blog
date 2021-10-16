@@ -1,3 +1,6 @@
+/**
+ * Interface for describing Route of react-router-dom.
+ */
 export interface IRoute {
   path: string;
   component: JSX.Element;

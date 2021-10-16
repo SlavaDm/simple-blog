@@ -67,7 +67,7 @@ export class PostsService {
 
   /**
    * The method for getting post by id.
-   * @param id - The param for getting post by id.
+   * @param id the param for getting post by id.
    * @returns the post by id.
    */
   public getPost(id: string): Observable<PostDTO> {

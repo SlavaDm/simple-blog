@@ -1,3 +1,6 @@
+/**
+ * Class DTO for describing values from server.
+ */
 export class PostDTO {
   readonly userId!: number;
   readonly id!: number;

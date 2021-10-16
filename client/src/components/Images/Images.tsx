@@ -11,9 +11,14 @@ import {
 } from '../../redux/imageSlice';
 
 import { debounce } from '../../utils/debounce';
+import { setPagination } from '../../utils/set-pagination';
 
 import s from './Images.module.scss';
 
+/**
+ * The component with images.
+ * @returns component with images.
+ */
 const Images: React.FC = () => {
   const dispatch = useDispatch();
 
@@ -27,41 +32,47 @@ const Images: React.FC = () => {
   const [searchImageInput, setSearchImageInput] = React.useState<string>('');
   const [buttonsArray, setButtonsArray] = React.useState<number[]>([]);
 
+  /**
+   * React Hook for printing images on page.
+   */
   React.useEffect(() => {
     dispatch(fetchGetImages(currentPage));
   }, [currentPage, dispatch]);
 
-  React.useEffect(() => {
-    if (allPages > 0) {
-      if (allPages < 3) {
-        setButtonsArray(
-          [1, 2, 3].slice(0, allPages - 1).map((num) => {
-            return num;
-          })
-        );
-      } else {
-        if (currentPage === allPages) {
-          setButtonsArray([currentPage - 2, currentPage - 1, currentPage]);
-        } else if (currentPage === 1) {
-          setButtonsArray([currentPage, currentPage + 1, currentPage + 2]);
-        } else {
-          setButtonsArray([currentPage - 1, currentPage, currentPage + 1]);
-        }
-      }
-    }
-  }, [currentPage, allPages]);
-
+  /**
+   * React Hook for setting count of all pages for pagination in the Redux.
+   */
   React.useEffect(() => {
     dispatch(fetchCountOfAllPages());
   }, [dispatch]);
 
-  const handleSearchImageInput = (event: any) => {
-    if (Number.isInteger(Number(event.target.value))) {
+  /**
+   * React Hook for setting pagination of the images.
+   */
+  React.useEffect(() => {
+    setPagination(setButtonsArray, currentPage, allPages);
+  }, [currentPage, allPages]);
+
+  /**
+   * The handle of input value for search image by id.
+   * @param event data from the input.
+   */
+  const handleSearchImageInput = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setSearchImageInput(event.target.value);
+    if (
+      Number.isInteger(Number(event.target.value)) &&
+      Number(event.target.value) > 0
+    ) {
       dispatch(fetchGetImageByID(Number(event.target.value)));
-      setSearchImageInput(event.target.value);
     }
   };
 
+  /**
+   * The handle of change current page, change state in the redux.
+   * @param page number for switching to need page.
+   */
   const handleChangeCurrentPage = (page: number) => {
     dispatch(setCurrentPage({ currentPage: page }));
   };
@@ -144,4 +155,4 @@ const Images: React.FC = () => {
   );
 };
 
-export default Images;
+export default React.memo(Images);

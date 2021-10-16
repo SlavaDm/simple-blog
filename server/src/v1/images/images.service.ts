@@ -67,7 +67,7 @@ export class ImagesService {
 
   /**
    * The method for getting image by id.
-   * @param id - The param for getting image by id.
+   * @param id the param for getting image by id.
    * @returns the image by id.
    */
   public getImage(id: string): Observable<ImageDTO> {

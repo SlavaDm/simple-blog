@@ -34,7 +34,7 @@ export class ImagesController {
   @Get(':id')
   /**
    * The method for getting image by id.
-   * @param id - The param for getting image by id.
+   * @param id the param for getting image by id.
    * @returns the post by id.
    */
   private getImage(@Param('id') id: string): Observable<ImageDTO> {

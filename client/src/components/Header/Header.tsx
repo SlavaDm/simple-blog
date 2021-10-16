@@ -1,7 +1,12 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import s from './Header.module.scss';
 
-const Header = () => {
+/**
+ * Header of the app with route-links.
+ * @returns Header component.
+ */
+const Header: React.FC = () => {
   return (
     <header className={s.header}>
       <nav className={s['header-navigation']}>
@@ -12,4 +17,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default React.memo(Header);

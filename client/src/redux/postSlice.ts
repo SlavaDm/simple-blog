@@ -1,25 +1,40 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { PostDTO } from '../dto/post.dto';
+import { CountOfTheElementsOnOnePage } from '../enum/CountOfTheElementsOnOnePage';
 import { IPostSlice } from '../interface/IPostSlice';
 import { PostsService } from '../service/PostsService';
 
+/**
+ * Async thunk for getting count of the posts.
+ */
 export const fetchCountOfAllPages = createAsyncThunk(
   'post/fetchCountOfAllPages',
   async () => {
     const countOfThePosts = await PostsService.getCountOfThePosts();
-    const countOfThePages = Math.ceil(countOfThePosts / 5);
+    const countOfThePages = Math.ceil(
+      countOfThePosts / CountOfTheElementsOnOnePage.COUNT_POSTS
+    );
     return countOfThePages;
   }
 );
 
+/**
+ * Async thunk for getting posts.
+ */
 export const fetchGetPosts = createAsyncThunk(
   'post/fetchGetPosts',
   async (page: number) => {
-    const posts = await PostsService.getPosts((page - 1) * 5 + 1, page * 5);
+    const posts = await PostsService.getPosts(
+      (page - 1) * CountOfTheElementsOnOnePage.COUNT_POSTS + 1,
+      page * CountOfTheElementsOnOnePage.COUNT_POSTS
+    );
     return posts;
   }
 );
 
+/**
+ * Async thunk for getting post by id.
+ */
 export const fetchGetPostByID = createAsyncThunk(
   'post/fetchGetPostByID',
   async (id: number) => {
@@ -42,9 +57,19 @@ const postSlice = createSlice({
     } as PostDTO,
   },
   reducers: {
+    /**
+     * The reducer for setting posts array.
+     * @param state current state of the redux.
+     * @param action data for setting state.
+     */
     setPosts(state: IPostSlice, action: { payload: { posts: PostDTO[] } }) {
       state.posts = action.payload.posts;
     },
+    /**
+     * The reducer for setting current page.
+     * @param state current state of the redux.
+     * @param action data for setting state.
+     */
     setCurrentPage(
       state: IPostSlice,
       action: { payload: { currentPage: number } }
@@ -53,13 +78,16 @@ const postSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchCountOfAllPages.fulfilled, (state, action) => {
-      state.allPages = action.payload;
-    });
-    builder.addCase(fetchGetPosts.fulfilled, (state, action) => {
+    builder.addCase(
+      fetchCountOfAllPages.fulfilled,
+      (state: IPostSlice, action) => {
+        state.allPages = action.payload;
+      }
+    );
+    builder.addCase(fetchGetPosts.fulfilled, (state: IPostSlice, action) => {
       state.posts = action.payload;
     });
-    builder.addCase(fetchGetPostByID.fulfilled, (state, action) => {
+    builder.addCase(fetchGetPostByID.fulfilled, (state: IPostSlice, action) => {
       state.postById = action.payload;
     });
   },

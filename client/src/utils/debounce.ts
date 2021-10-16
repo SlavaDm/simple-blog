@@ -1,7 +1,7 @@
 /**
  * Delays function.
- * @param fn Function to debounce.
- * @param delay Time to delay execution of function.
+ * @param fn the function to debounce.
+ * @param delay time to delay execution of function.
  * @returns the debounced function.
  */
 export function debounce<TArgs extends any[]>(

@@ -3,6 +3,10 @@ import { Redirect, Route, Switch } from 'react-router';
 import { IRoute } from '../../interface/IRoute';
 import { publicRoutes } from './Routes';
 
+/**
+ * The component with the routes of the app.
+ * @returns component with routes.
+ */
 const AppRouter: React.FC = () => {
   return (
     <div className="wrapper">
@@ -23,4 +27,4 @@ const AppRouter: React.FC = () => {
   );
 };
 
-export default AppRouter;
+export default React.memo(AppRouter);
