@@ -1,7 +1,8 @@
 import React from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
 
-import { PostDTO } from '../../dto/post.dto';
+import { IPost } from '../../interface/Post/IPost';
 
 import { RootState } from '../../redux';
 
@@ -24,7 +25,9 @@ import s from './Posts.module.scss';
 const Posts: React.FC = () => {
   const dispatch = useDispatch();
 
-  const postById = useSelector((state: RootState) => state.post.postById);
+  const postById: IPost | null = useSelector(
+    (state: RootState) => state.post.postById
+  );
   const posts = useSelector((state: RootState) => state.post.posts);
   const allPages = useSelector((state: RootState) => state.post.allPages);
   const currentPage = useSelector((state: RootState) => state.post.currentPage);
@@ -79,7 +82,7 @@ const Posts: React.FC = () => {
 
   return (
     <div className={s['posts-area']}>
-      {posts.length >= 0 ? (
+      {posts.length > 0 ? (
         <>
           <div className={s['post-search-area']}>
             <input
@@ -90,7 +93,7 @@ const Posts: React.FC = () => {
           </div>
 
           {searchPostInput.length > 0 ? (
-            postById.id !== -1 ? (
+            Object.keys(postById).length > 0 ? (
               <div className={s.post}>
                 <ul>
                   <li>id: {postById.id}</li>
@@ -105,7 +108,7 @@ const Posts: React.FC = () => {
           ) : (
             <>
               <ul className={s['posts-list']}>
-                {posts.map((post: PostDTO) => {
+                {posts.map((post: IPost) => {
                   return (
                     <li className={s.post} key={post.id}>
                       <ul>
@@ -149,7 +152,7 @@ const Posts: React.FC = () => {
           )}
         </>
       ) : (
-        <div>Server error</div>
+        <div>Loading</div>
       )}
     </div>
   );

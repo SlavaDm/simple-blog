@@ -1,8 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { ImageDTO } from '../dto/image.dto';
+
 import { CountOfTheElementsOnOnePage } from '../enum/CountOfTheElementsOnOnePage';
 
-import { IImageSlice } from '../interface/IImageSlice';
+import { IImage } from '../interface/Image/IImage';
+import { IImageSlice } from '../interface/Image/IImageSlice';
 
 import { ImagesService } from '../service/ImagesService';
 
@@ -48,16 +49,10 @@ export const fetchGetImageByID = createAsyncThunk(
 const imageSlice = createSlice({
   name: 'image',
   initialState: {
-    images: [] as ImageDTO[],
+    images: [] as IImage[],
     currentPage: 1,
     allPages: 0,
-    imageById: {
-      id: -1,
-      thumbnailUrl: '',
-      title: '',
-      url: '',
-      albumId: -1,
-    } as ImageDTO,
+    imageById: {} as IImage,
   },
   reducers: {
     /**
@@ -65,7 +60,7 @@ const imageSlice = createSlice({
      * @param state current state of the redux.
      * @param action data for setting state.
      */
-    setImages(state: IImageSlice, action: { payload: { images: ImageDTO[] } }) {
+    setImages(state: IImageSlice, action: { payload: { images: IImage[] } }) {
       state.images = action.payload.images;
     },
     /**

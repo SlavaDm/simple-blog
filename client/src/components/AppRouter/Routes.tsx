@@ -1,4 +1,5 @@
-import { IRoute } from '../../interface/IRoute';
+import { IRoute } from '../../interface/Route/IRoute';
+
 import Images from '../Images/Images';
 import Posts from '../Posts/Posts';
 

@@ -1,6 +1,9 @@
 import React from 'react';
+
 import { Redirect, Route, Switch } from 'react-router';
-import { IRoute } from '../../interface/IRoute';
+
+import { IRoute } from '../../interface/Route/IRoute';
+
 import { publicRoutes } from './Routes';
 
 /**

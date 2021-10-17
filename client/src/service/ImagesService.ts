@@ -1,6 +1,12 @@
 import axios from 'axios';
+
+import { ImageMapper } from '../mapper/image.mapper';
+
 import { ImageDTO } from '../dto/image.dto';
+
 import { ServerVariables } from '../enum/ServerVariables';
+
+import { IImage } from '../interface/Image/IImage';
 
 /**
  * Service for working with images by server api.
@@ -12,15 +18,15 @@ export class ImagesService {
    * @param to right boundary condition for pagination.
    * @returns array with images.
    */
-  public static async getImages(from: number, to: number): Promise<ImageDTO[]> {
+  public static async getImages(from: number, to: number): Promise<IImage[]> {
     try {
       const images = await axios.get<ImageDTO[]>(
         `${ServerVariables.HOST}/v1/images?from=${from}&to=${to}`
       );
 
-      return images.data;
+      return ImageMapper.imagesFromDTO(images.data);
     } catch (e) {
-      return [];
+      return [] as IImage[];
     }
   }
 
@@ -49,15 +55,15 @@ export class ImagesService {
    * @param id search param for find the image.
    * @returns object with image info.
    */
-  public static async getImage(id: number): Promise<ImageDTO> {
+  public static async getImage(id: number): Promise<IImage> {
     try {
       const image = await axios.get<ImageDTO>(
         `${ServerVariables.HOST}/v1/images/${id}`
       );
 
-      return image.data;
+      return ImageMapper.imageFromDTO(image.data);
     } catch (e) {
-      return { id: -1, title: '', thumbnailUrl: '', url: '', albumId: -1 };
+      return {} as IImage;
     }
   }
 }

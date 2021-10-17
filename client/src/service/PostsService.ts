@@ -1,6 +1,12 @@
 import axios from 'axios';
+
+import { PostMapper } from '../mapper/post.mapper';
+
 import { PostDTO } from '../dto/post.dto';
+
 import { ServerVariables } from '../enum/ServerVariables';
+
+import { IPost } from '../interface/Post/IPost';
 
 /**
  * Service for working with posts by server api.
@@ -12,15 +18,15 @@ export class PostsService {
    * @param to right boundary condition for pagination.
    * @returns array with posts.
    */
-  public static async getPosts(from: number, to: number): Promise<PostDTO[]> {
+  public static async getPosts(from: number, to: number): Promise<IPost[]> {
     try {
       const posts = await axios.get<PostDTO[]>(
         `${ServerVariables.HOST}/v1/posts?from=${from}&to=${to}`
       );
 
-      return posts.data;
+      return PostMapper.postsFromDTO(posts.data);
     } catch (e) {
-      return [];
+      return [] as IPost[];
     }
   }
 
@@ -49,15 +55,15 @@ export class PostsService {
    * @param id search param for find the post.
    * @returns object with post info.
    */
-  public static async getPost(id: number): Promise<PostDTO> {
+  public static async getPost(id: number): Promise<IPost> {
     try {
       const posts = await axios.get<PostDTO>(
         `${ServerVariables.HOST}/v1/posts/${id}`
       );
 
-      return posts.data;
+      return PostMapper.postFromDTO(posts.data);
     } catch (e) {
-      return { userId: -1, id: -1, title: '', body: '' };
+      return {} as IPost;
     }
   }
 }

@@ -1,6 +1,8 @@
 import React from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
-import { ImageDTO } from '../../dto/image.dto';
+
+import { IImage } from '../../interface/Image/IImage';
 
 import { RootState } from '../../redux';
 import {
@@ -79,7 +81,7 @@ const Images: React.FC = () => {
 
   return (
     <div className={s['images-area']}>
-      {images.length >= 0 ? (
+      {images.length > 0 ? (
         <>
           <div className={s['image-search-area']}>
             <input
@@ -90,7 +92,7 @@ const Images: React.FC = () => {
           </div>
 
           {searchImageInput.length > 0 ? (
-            imageById.id !== -1 ? (
+            Object.keys(imageById).length > 0 ? (
               <ul className={s['image-big']}>
                 <li>id: {imageById.id}</li>
                 <li>title: {imageById.title}</li>
@@ -104,7 +106,7 @@ const Images: React.FC = () => {
           ) : (
             <>
               <ul className={s['images-list']}>
-                {images.map((image: ImageDTO) => {
+                {images.map((image: IImage) => {
                   return (
                     <li className={s.image} key={image.id}>
                       <ul>
@@ -149,7 +151,7 @@ const Images: React.FC = () => {
           )}
         </>
       ) : (
-        <div>Server error</div>
+        <div>Loading</div>
       )}
     </div>
   );

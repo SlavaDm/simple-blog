@@ -1,7 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { PostDTO } from '../dto/post.dto';
+
 import { CountOfTheElementsOnOnePage } from '../enum/CountOfTheElementsOnOnePage';
-import { IPostSlice } from '../interface/IPostSlice';
+
+import { IPost } from '../interface/Post/IPost';
+import { IPostSlice } from '../interface/Post/IPostSlice';
+
 import { PostsService } from '../service/PostsService';
 
 /**
@@ -46,15 +49,10 @@ export const fetchGetPostByID = createAsyncThunk(
 const postSlice = createSlice({
   name: 'post',
   initialState: {
-    posts: [] as PostDTO[],
+    posts: [] as IPost[],
     currentPage: 1,
     allPages: 0,
-    postById: {
-      userId: -1,
-      id: -1,
-      title: '',
-      body: '',
-    } as PostDTO,
+    postById: {} as IPost,
   },
   reducers: {
     /**
@@ -62,7 +60,7 @@ const postSlice = createSlice({
      * @param state current state of the redux.
      * @param action data for setting state.
      */
-    setPosts(state: IPostSlice, action: { payload: { posts: PostDTO[] } }) {
+    setPosts(state: IPostSlice, action: { payload: { posts: IPost[] } }) {
       state.posts = action.payload.posts;
     },
     /**

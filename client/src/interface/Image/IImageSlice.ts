@@ -1,10 +1,10 @@
-import { ImageDTO } from '../dto/image.dto';
+import { IImage } from './IImage';
 
 /**
  * Interface for redux image-slice.
  */
 export interface IImageSlice {
-  images: ImageDTO[] | null;
+  images: IImage[] | null;
   currentPage: number;
-  allPages: null | number;
+  allPages: number;
 }

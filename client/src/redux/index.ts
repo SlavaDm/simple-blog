@@ -1,4 +1,5 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
+
 import imageSlice from './imageSlice';
 import postSlice from './postSlice';
 
