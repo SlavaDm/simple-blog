@@ -17,9 +17,9 @@
   - ```bash
     $ npm install
     ```
-    - ```bash
-      $ npm run start
-      ```
+  - ```bash
+    $ npm run start
+    ```
 
 #### Ports 3000 and 4000 must to be free
 
