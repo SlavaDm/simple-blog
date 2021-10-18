@@ -28,7 +28,7 @@ export class ImagesService {
           }),
           map((response) => {
             return response.data
-              .sort((a, b) => (a.id > b.id ? 1 : -1))
+              .sort((a: ImageDTO, b: ImageDTO) => (a.id > b.id ? 1 : -1))
               .slice(Number(from) - 1, Number(to));
           }),
         );
@@ -70,7 +70,7 @@ export class ImagesService {
    * @param id the param for getting image by id.
    * @returns the image by id.
    */
-  public getImage(id: string): Observable<ImageDTO> {
+  public getImage(id: string): Observable<ImageDTO> | null {
     if (Number.isInteger(Number(id))) {
       return this.httpService
         .get(`https://jsonplaceholder.typicode.com/photos/${id}`)

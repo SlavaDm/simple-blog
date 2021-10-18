@@ -28,7 +28,7 @@ export class PostsService {
           }),
           map((response) => {
             return response.data
-              .sort((a, b) => (a.id > b.id ? 1 : -1))
+              .sort((a: PostDTO, b: PostDTO) => (a.id > b.id ? 1 : -1))
               .slice(Number(from) - 1, Number(to));
           }),
         );
@@ -70,7 +70,7 @@ export class PostsService {
    * @param id the param for getting post by id.
    * @returns the post by id.
    */
-  public getPost(id: string): Observable<PostDTO> {
+  public getPost(id: string): Observable<PostDTO> | null {
     if (Number.isInteger(Number(id))) {
       return this.httpService
         .get(`https://jsonplaceholder.typicode.com/posts/${id}`)

@@ -6,6 +6,6 @@ import { IPost } from './IPost';
 export interface IPostSlice {
   posts: IPost[];
   currentPage: number;
-  allPages: number;
+  countOfTheAllPages: number;
   postById: IPost;
 }

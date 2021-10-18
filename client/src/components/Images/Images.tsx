@@ -6,7 +6,7 @@ import { IImage } from '../../interface/Image/IImage';
 
 import { RootState } from '../../redux';
 import {
-  fetchCountOfAllPages,
+  fetchCountOfTheAllPages,
   fetchGetImageByID,
   fetchGetImages,
   setCurrentPage,
@@ -26,7 +26,9 @@ const Images: React.FC = () => {
 
   const imageById = useSelector((state: RootState) => state.image.imageById);
   const images = useSelector((state: RootState) => state.image.images);
-  const allPages = useSelector((state: RootState) => state.image.allPages);
+  const countOfTheAllPages = useSelector(
+    (state: RootState) => state.image.countOfTheAllPages
+  );
   const currentPage = useSelector(
     (state: RootState) => state.image.currentPage
   );
@@ -45,15 +47,15 @@ const Images: React.FC = () => {
    * React Hook for setting count of all pages for pagination in the Redux.
    */
   React.useEffect(() => {
-    dispatch(fetchCountOfAllPages());
+    dispatch(fetchCountOfTheAllPages());
   }, [dispatch]);
 
   /**
    * React Hook for setting pagination of the images.
    */
   React.useEffect(() => {
-    setPagination(setButtonsArray, currentPage, allPages);
-  }, [currentPage, allPages]);
+    setPagination(setButtonsArray, currentPage, countOfTheAllPages);
+  }, [currentPage, countOfTheAllPages]);
 
   /**
    * The handle of input value for search image by id.

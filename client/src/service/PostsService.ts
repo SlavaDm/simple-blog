@@ -16,7 +16,7 @@ export class PostsService {
    * The function for getting posts.
    * @param from left boundary condition for pagination.
    * @param to right boundary condition for pagination.
-   * @returns array with posts.
+   * @returns the array with posts.
    */
   public static async getPosts(from: number, to: number): Promise<IPost[]> {
     try {
@@ -25,13 +25,13 @@ export class PostsService {
       );
 
       return PostMapper.postsFromDTO(posts.data);
-    } catch (e) {
+    } catch (_) {
       return [] as IPost[];
     }
   }
 
   /**
-   * Function is getting count of the posts.
+   * The function is getting count of the posts.
    * @returns the count of the all posts.
    */
   public static async getCountOfThePosts(): Promise<number> {
@@ -45,7 +45,7 @@ export class PostsService {
       }
 
       return 0;
-    } catch (e) {
+    } catch (_) {
       return 0;
     }
   }
@@ -53,7 +53,7 @@ export class PostsService {
   /**
    * The function for getting post by id.
    * @param id search param for find the post.
-   * @returns object with post info.
+   * @returns the object with post info.
    */
   public static async getPost(id: number): Promise<IPost> {
     try {
@@ -62,7 +62,7 @@ export class PostsService {
       );
 
       return PostMapper.postFromDTO(posts.data);
-    } catch (e) {
+    } catch (_) {
       return {} as IPost;
     }
   }

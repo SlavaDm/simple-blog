@@ -16,7 +16,7 @@ export class ImagesService {
    * The function for getting images.
    * @param from left boundary condition for pagination.
    * @param to right boundary condition for pagination.
-   * @returns array with images.
+   * @returns the array with images.
    */
   public static async getImages(from: number, to: number): Promise<IImage[]> {
     try {
@@ -25,13 +25,13 @@ export class ImagesService {
       );
 
       return ImageMapper.imagesFromDTO(images.data);
-    } catch (e) {
+    } catch (_) {
       return [] as IImage[];
     }
   }
 
   /**
-   * Function is getting count of the images.
+   * The function is getting count of the images.
    * @returns the count of the all images.
    */
   public static async getCountOfTheImages(): Promise<number> {
@@ -45,7 +45,7 @@ export class ImagesService {
       }
 
       return 0;
-    } catch (e) {
+    } catch (_) {
       return 0;
     }
   }
@@ -53,7 +53,7 @@ export class ImagesService {
   /**
    * The function for getting image by id.
    * @param id search param for find the image.
-   * @returns object with image info.
+   * @returns the object with image info.
    */
   public static async getImage(id: number): Promise<IImage> {
     try {
@@ -62,7 +62,7 @@ export class ImagesService {
       );
 
       return ImageMapper.imageFromDTO(image.data);
-    } catch (e) {
+    } catch (_) {
       return {} as IImage;
     }
   }

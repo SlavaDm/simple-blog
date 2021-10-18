@@ -2,22 +2,18 @@
  * The function for setting buttons for pagination.
  * @param setButtonsArray callback for change buttons array with pagination.
  * @param currentPage number of the current page.
- * @param allPages count of the all pages.
+ * @param countOfTheAllPages count of the all pages.
  */
 export const setPagination = (
   setButtonsArray: React.Dispatch<React.SetStateAction<number[]>>,
   currentPage: number,
-  allPages: number
+  countOfTheAllPages: number
 ) => {
-  if (allPages > 0) {
-    if (allPages < 3) {
-      setButtonsArray(
-        [1, 2, 3].slice(0, allPages - 1).map((num) => {
-          return num;
-        })
-      );
+  if (countOfTheAllPages > 0) {
+    if (countOfTheAllPages < 3) {
+      setButtonsArray([1, 2, 3].slice(0, countOfTheAllPages - 1));
     } else {
-      if (currentPage === allPages) {
+      if (currentPage === countOfTheAllPages) {
         setButtonsArray([currentPage - 2, currentPage - 1, currentPage]);
       } else if (currentPage === 1) {
         setButtonsArray([currentPage, currentPage + 1, currentPage + 2]);

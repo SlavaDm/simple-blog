@@ -1,7 +1,10 @@
+/**
+ * Interface for image.
+ */
 export interface IImage {
-  id: number;
-  albumId: number;
-  title: string;
-  url: string;
-  thumbnailUrl: string;
+  readonly id: number;
+  readonly albumId: number;
+  readonly title: string;
+  readonly url: string;
+  readonly thumbnailUrl: string;
 }

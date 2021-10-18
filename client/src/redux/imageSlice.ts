@@ -10,14 +10,14 @@ import { ImagesService } from '../service/ImagesService';
 /**
  * Async thunk for getting count of the images.
  */
-export const fetchCountOfAllPages = createAsyncThunk(
-  'image/fetchCountOfAllPages',
+export const fetchCountOfTheAllPages = createAsyncThunk(
+  'image/fetchCountOfTheAllPages',
   async () => {
     const countOfTheImages = await ImagesService.getCountOfTheImages();
-    const countOfThePages = Math.ceil(
+    const countOfTheAllPages = Math.ceil(
       countOfTheImages / CountOfTheElementsOnOnePage.COUNT_IMAGES
     );
-    return countOfThePages;
+    return { countOfTheAllPages };
   }
 );
 
@@ -31,7 +31,7 @@ export const fetchGetImages = createAsyncThunk(
       (page - 1) * CountOfTheElementsOnOnePage.COUNT_IMAGES + 1,
       page * CountOfTheElementsOnOnePage.COUNT_IMAGES
     );
-    return images;
+    return { images };
   }
 );
 
@@ -42,7 +42,7 @@ export const fetchGetImageByID = createAsyncThunk(
   'image/fetchGetImageByID',
   async (id: number) => {
     const image = await ImagesService.getImage(id);
-    return image;
+    return { image };
   }
 );
 
@@ -51,7 +51,7 @@ const imageSlice = createSlice({
   initialState: {
     images: [] as IImage[],
     currentPage: 1,
-    allPages: 0,
+    countOfTheAllPages: 0,
     imageById: {} as IImage,
   },
   reducers: {
@@ -76,15 +76,27 @@ const imageSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchCountOfAllPages.fulfilled, (state, action) => {
-      state.allPages = action.payload;
-    });
-    builder.addCase(fetchGetImages.fulfilled, (state, action) => {
-      state.images = action.payload;
-    });
-    builder.addCase(fetchGetImageByID.fulfilled, (state, action) => {
-      state.imageById = action.payload;
-    });
+    builder.addCase(
+      fetchCountOfTheAllPages.fulfilled,
+      (
+        state: IImageSlice,
+        action: { payload: { countOfTheAllPages: number } }
+      ) => {
+        state.countOfTheAllPages = action.payload.countOfTheAllPages;
+      }
+    );
+    builder.addCase(
+      fetchGetImages.fulfilled,
+      (state: IImageSlice, action: { payload: { images: IImage[] } }) => {
+        state.images = action.payload.images;
+      }
+    );
+    builder.addCase(
+      fetchGetImageByID.fulfilled,
+      (state: IImageSlice, action: { payload: { image: IImage } }) => {
+        state.imageById = action.payload.image;
+      }
+    );
   },
 });
 

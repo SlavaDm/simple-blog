@@ -10,14 +10,14 @@ import { PostsService } from '../service/PostsService';
 /**
  * Async thunk for getting count of the posts.
  */
-export const fetchCountOfAllPages = createAsyncThunk(
-  'post/fetchCountOfAllPages',
+export const fetchCountOfTheAllPages = createAsyncThunk(
+  'post/fetchCountOfTheAllPages',
   async () => {
     const countOfThePosts = await PostsService.getCountOfThePosts();
-    const countOfThePages = Math.ceil(
+    const countOfTheAllPages = Math.ceil(
       countOfThePosts / CountOfTheElementsOnOnePage.COUNT_POSTS
     );
-    return countOfThePages;
+    return { countOfTheAllPages };
   }
 );
 
@@ -31,7 +31,7 @@ export const fetchGetPosts = createAsyncThunk(
       (page - 1) * CountOfTheElementsOnOnePage.COUNT_POSTS + 1,
       page * CountOfTheElementsOnOnePage.COUNT_POSTS
     );
-    return posts;
+    return { posts };
   }
 );
 
@@ -42,7 +42,7 @@ export const fetchGetPostByID = createAsyncThunk(
   'post/fetchGetPostByID',
   async (id: number) => {
     const post = await PostsService.getPost(id);
-    return post;
+    return { post };
   }
 );
 
@@ -51,7 +51,7 @@ const postSlice = createSlice({
   initialState: {
     posts: [] as IPost[],
     currentPage: 1,
-    allPages: 0,
+    countOfTheAllPages: 0,
     postById: {} as IPost,
   },
   reducers: {
@@ -77,17 +77,26 @@ const postSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(
-      fetchCountOfAllPages.fulfilled,
-      (state: IPostSlice, action) => {
-        state.allPages = action.payload;
+      fetchCountOfTheAllPages.fulfilled,
+      (
+        state: IPostSlice,
+        action: { payload: { countOfTheAllPages: number } }
+      ) => {
+        state.countOfTheAllPages = action.payload.countOfTheAllPages;
       }
     );
-    builder.addCase(fetchGetPosts.fulfilled, (state: IPostSlice, action) => {
-      state.posts = action.payload;
-    });
-    builder.addCase(fetchGetPostByID.fulfilled, (state: IPostSlice, action) => {
-      state.postById = action.payload;
-    });
+    builder.addCase(
+      fetchGetPosts.fulfilled,
+      (state: IPostSlice, action: { payload: { posts: IPost[] } }) => {
+        state.posts = action.payload.posts;
+      }
+    );
+    builder.addCase(
+      fetchGetPostByID.fulfilled,
+      (state: IPostSlice, action: { payload: { post: IPost } }) => {
+        state.postById = action.payload.post;
+      }
+    );
   },
 });
 

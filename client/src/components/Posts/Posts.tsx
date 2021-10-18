@@ -7,7 +7,7 @@ import { IPost } from '../../interface/Post/IPost';
 import { RootState } from '../../redux';
 
 import {
-  fetchCountOfAllPages,
+  fetchCountOfTheAllPages,
   fetchGetPostByID,
   fetchGetPosts,
   setCurrentPage,
@@ -29,7 +29,9 @@ const Posts: React.FC = () => {
     (state: RootState) => state.post.postById
   );
   const posts = useSelector((state: RootState) => state.post.posts);
-  const allPages = useSelector((state: RootState) => state.post.allPages);
+  const countOfTheAllPages = useSelector(
+    (state: RootState) => state.post.countOfTheAllPages
+  );
   const currentPage = useSelector((state: RootState) => state.post.currentPage);
 
   const [searchPostInput, setSearchPostInput] = React.useState<string>('');
@@ -46,15 +48,15 @@ const Posts: React.FC = () => {
    * React Hook for setting count of all pages for pagination in the Redux.
    */
   React.useEffect(() => {
-    dispatch(fetchCountOfAllPages());
+    dispatch(fetchCountOfTheAllPages());
   }, [dispatch]);
 
   /**
    * React Hook for setting pagination of the posts.
    */
   React.useEffect(() => {
-    setPagination(setButtonsArray, currentPage, allPages);
-  }, [currentPage, allPages]);
+    setPagination(setButtonsArray, currentPage, countOfTheAllPages);
+  }, [currentPage, countOfTheAllPages]);
 
   /**
    * The handle of input value for search post by id.

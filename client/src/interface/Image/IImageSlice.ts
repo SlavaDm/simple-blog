@@ -4,7 +4,8 @@ import { IImage } from './IImage';
  * Interface for redux image-slice.
  */
 export interface IImageSlice {
-  images: IImage[] | null;
+  images: IImage[];
   currentPage: number;
-  allPages: number;
+  countOfTheAllPages: number;
+  imageById: IImage;
 }
